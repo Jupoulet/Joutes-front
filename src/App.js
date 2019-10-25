@@ -1,26 +1,32 @@
 import React from 'react';
-import logo from './logo.svg';
+import styled from 'styled-components';
+import "tabler-react/dist/Tabler.css";
+import init from './controllers/initDb';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+} from "react-router-dom";
+import Home from './pages/Home';
 import './App.css';
+import Navbar from './components/Navbar/index'
 
-function App() {
+const Wrapper = styled.div`
+  height: 100%;
+  padding: 0em 2em;
+`
+// DATABASE_URL : postgresql-tetrahedral-56838
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <Wrapper>
+      <Navbar />
+      <Router>
+        <Switch>
+          <Route exatc path="/" component={Home} />
+        </Switch>
+      </Router>
+    </Wrapper>
+  )
 }
 
 export default App;
