@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import "tabler-react/dist/Tabler.css";
-import init from './controllers/initDb';
+// import init from './controllers/initDb';
 import {
   BrowserRouter as Router,
   Switch,
