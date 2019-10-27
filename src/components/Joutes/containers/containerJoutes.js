@@ -12,6 +12,10 @@ const StyledContainerJoutes = styled.div`
 `;
 
 const Div = styled.div`
+    ${(props) => {
+        return props.minimize ? ` @media (max-width: 600px) { width: 35px; }` : ''
+    }}
+    width: ${(props) => props.width || 'unset'};
     display: flex;
     align-items: center;
     max-width: 250px;
@@ -185,10 +189,10 @@ const ContainerJoutes = () => {
                             </Div>
                         </Table.Col>
                         <Table.Col>
-                            <Div style={{ width: '35px'}}>
+                            <Div minimize={true} width='70px' >
                                 <Form.Input type="number" max={players.j2.sets === 3 ? 2 : 3} min="0" onChange={(e) => { handleChange(e, 'j1') }} />
                             </Div>  
-                            <Div style={{ width: '35px'}}>
+                            <Div minimize={true} width='70px' >
                                 <Form.Input type="number" max={players.j1.sets === 3 ? 2 : 3} min="0" onChange={(e) => { handleChange(e, 'j2') }} />
                             </Div>
                         </Table.Col>
