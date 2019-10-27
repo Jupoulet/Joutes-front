@@ -5,7 +5,9 @@
 .App-logo {
   height: 40vmin;
 }
-
+.responsive-btn {
+  min-width: 1.5em;
+}
 .App-header {
   background-color: #282c34;
   min-height: 100vh;

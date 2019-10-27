@@ -6,5 +6,4 @@ const client = new Client({
   ssl: true,
 });
 
-console.log('COUCOU');
 client.connect();

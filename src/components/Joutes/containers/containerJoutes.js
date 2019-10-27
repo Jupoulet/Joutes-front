@@ -20,6 +20,7 @@ const Div = styled.div`
 
 const ContainerJoutes = () => {
     const [listOfPlayers, setListOfPlayers] = useState([]);
+    const [requesting, setRequesting] = useState(false);
     const [listOfJoutes, setListOfJoutes] = useState([]);
     const [ready, setReady] = useState(false);
     const J1Ref = useRef(null);
@@ -40,10 +41,6 @@ const ContainerJoutes = () => {
         const fetch = async () => {
             const joutes = await getJoutes();
             const allPlayers = await getPlayers();
-            console.log('Result from api', {
-                allPlayers,
-                joutes
-            });
             setListOfPlayers(allPlayers);
             setListOfJoutes(joutes);
             setReady(true);
@@ -65,7 +62,6 @@ const ContainerJoutes = () => {
         )
     }
     const handleClick = (player, oneOrTwo) => {
-        console.log('E target.value', player);
         setPlayers({
             ...players,
             [oneOrTwo]: {
@@ -79,12 +75,9 @@ const ContainerJoutes = () => {
         } else {
             J2Ref.current.state.isOpen = !J2Ref.current.state.isOpen;
         }
-
-        console.log(J1Ref.current);
     }
 
     const handleChange = (e, oneOrTwo) => {
-        console.log(e.target.value);
         setPlayers({
             ...players,
             [oneOrTwo]: {
@@ -97,16 +90,11 @@ const ContainerJoutes = () => {
                 sets: e.target.value / 1
             } : players.winner
         })
-        console.log('Winner', {
-            winner: e.target.value == 3 ? {
-                name: players[oneOrTwo].name,
-                sets: e.target.value / 1
-            } : players.winner
-        })
     }
 
     const addJoute = async () => {
-        console.log('players', players);
+        if (requesting) { return }
+        setRequesting(true);
         if (!players.winner.id) { return; }
         const loser = [players.j1, players.j2].find((player) => player.sets !== 3);
         const res = await postJoute({
@@ -115,6 +103,17 @@ const ContainerJoutes = () => {
             loser_sets: loser.sets
         })
         if (res) {
+            setPlayers({
+                j1: {
+                    name: '',
+                    sets: 0
+                },
+                j2: {
+                    name: '',
+                    sets: 0
+                },
+                winner: {}
+            })
             setListOfJoutes((prev) => {
                 return [
                     ...prev,
@@ -126,6 +125,9 @@ const ContainerJoutes = () => {
                     }
                 ]
             })
+            setTimeout(() => {
+                setRequesting(false);
+            }, 1000)
         }
     }
 
@@ -170,23 +172,23 @@ const ContainerJoutes = () => {
                 <Table.Row>
                         <Table.Col>
                             <Div>
-                                <Button.Dropdown ref={J1Ref} color="primary">
+                                <Button.Dropdown className="responsive-btn" ref={J1Ref} color="primary">
                                     {generateListOfPlayers('j1')}
                                 </Button.Dropdown>
                                 <Form.Input placeholder="Joueur 1" value={players.j1.name || ''} readOnly />
                             </Div>
                             <Div>
-                                <Button.Dropdown ref={J2Ref} color="primary">
+                                <Button.Dropdown className="responsive-btn" ref={J2Ref} color="primary">
                                     {generateListOfPlayers('j2')}
                                 </Button.Dropdown>
                                 <Form.Input placeholder="Joueur 1" value={players.j2.name || ''} readOnly />
                             </Div>
                         </Table.Col>
                         <Table.Col>
-                            <Div style={{ width: '70px'}}>
+                            <Div style={{ width: '35px'}}>
                                 <Form.Input type="number" max={players.j2.sets === 3 ? 2 : 3} min="0" onChange={(e) => { handleChange(e, 'j1') }} />
                             </Div>  
-                            <Div style={{ width: '70px'}}>
+                            <Div style={{ width: '35px'}}>
                                 <Form.Input type="number" max={players.j1.sets === 3 ? 2 : 3} min="0" onChange={(e) => { handleChange(e, 'j2') }} />
                             </Div>
                         </Table.Col>
@@ -194,9 +196,9 @@ const ContainerJoutes = () => {
                             <Div>
                                 <Form.Input value={players.winner.name || ''}/>
                             </Div>
-                        </Table.Col>
-                        <Table.Col>
-                            <Button  color="primary" onClick={addJoute}>Ajouter</Button>
+                            <Div>
+                                <Button loading={requesting} color="primary" onClick={addJoute}>Ajouter</Button>
+                            </Div>
                         </Table.Col>
                     </Table.Row>
                 </Table.Body>

@@ -4,7 +4,6 @@ import config from '../config';
 const api = config[process.env.NODE_ENV].api;
 
 export const getJoutes = async () => {
-    // console.log('URL', `${api}/joutes`);
     const result = await axios.get(`${api}/joutes`);
     if (result) {
         return result.data.joutes || [];
