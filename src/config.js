@@ -3,6 +3,6 @@ module.exports = {
         api: "http://localhost:4000"
     },
     production: {
-        api: 'https://api-joutes.herokuapp.com/'
+        api: 'https://api-joutes.herokuapp.com'
     }
 }
