@@ -46,7 +46,7 @@ const ContainerJoutes = () => {
             const joutes = await getJoutes();
             const allPlayers = await getPlayers();
             setListOfPlayers(allPlayers);
-            setListOfJoutes(joutes);
+            setListOfJoutes(joutes.reverse());
             setReady(true);
         }
         fetch();
@@ -120,13 +120,13 @@ const ContainerJoutes = () => {
             })
             setListOfJoutes((prev) => {
                 return [
-                    ...prev,
                     {
                         id: prev.length +1,
                         loser: loser.name,
                         score: { winner: 3, loser: loser.sets },
                         winner: players.winner.name
-                    }
+                    },
+                    ...prev
                 ]
             })
             setTimeout(() => {
