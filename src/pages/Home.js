@@ -3,6 +3,7 @@ import Joutes from '../components/Joutes/containers/containerJoutes';
 import { Card, Page, Grid } from 'tabler-react'
 import styled from 'styled-components';
 import Modal from '../components/Modal/index'
+import AddJoute from '../components/Joutes/AddJoute.js';
 
 const Div = styled.div`
     padding: 2em 2em 0em 2em;
@@ -23,6 +24,14 @@ const Home = () => {
                                     <Page.Title>Joutes</Page.Title>
                                 </Div>
                                 <Joutes />
+                            </Card>            
+                        </Grid.Col>
+                        <Grid.Col md={5}>
+                            <Card>
+                                <Div>
+                                    <Page.Title>Ajouter votre joute</Page.Title>
+                                </Div>
+                                <AddJoute />
                             </Card>            
                         </Grid.Col>
                     </Grid.Row>
