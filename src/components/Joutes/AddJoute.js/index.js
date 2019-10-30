@@ -4,9 +4,6 @@ import { Table, Tag, Form, Dropdown, Button } from 'tabler-react';
 import { getPlayers, postJoute } from '../../../controllers/API';
 
 const Div = styled.div`
-    ${(props) => {
-        return props.minimize ? ` @media (max-width: 600px) { width: 35px; }` : ''
-    }}
     width: ${(props) => props.width || 'unset'};
     display: flex;
     align-items: flex-end;
@@ -64,18 +61,28 @@ const AddJoute = ({ setListOfJoutes }) => {
     }
 
     const handleChange = (e, oneOrTwo) => {
-        console.log(e.target.value);
-        if (e.target.value.length > 0 && !/[0-9]/.test(e.target.value)) { return; }
+        if (!/[0-3]/.test(e.target.value) && e.target.value.length) {
+            setPlayers({
+                ...players,
+                [oneOrTwo]: {
+                    ...players[oneOrTwo],
+                    inputIntent: e.target.value
+                }
+            })
+            return;
+        }
+
         setPlayers({
             ...players,
             [oneOrTwo]: {
                 ...players[oneOrTwo],
-                sets: e.target.value && e.target.value / 1 || ''
+                sets: e.target.value === '0' ? 0 : e.target.value / 1 || '',
+                inputIntent: e.target.value
             },
             winner: e.target.value == 3 ? {
                 name: players[oneOrTwo].name,
                 id: players[oneOrTwo].id,
-                sets: e.target.value && e.target.value / 1 || ''
+                sets: e.target.value === '0' ? 0 : e.target.value / 1 || ''
             } : players.winner
         })
     }
@@ -136,7 +143,6 @@ const AddJoute = ({ setListOfJoutes }) => {
     }
 
     const isValid = (j) => {
-        console.log('players', players[j].sets);
         if ([0, 1, 2, 3].includes(players[j].sets)) {
             return true
         }
@@ -147,6 +153,9 @@ const AddJoute = ({ setListOfJoutes }) => {
 
         if (players[j].sets !== '' && ![0, 1, 2, 3].includes(players[j].sets)){
             return 'Si pas bien';
+        }
+        if (players[j].inputIntent && ![0, 1, 2, 3].includes(players[j].sets)){
+            return 'Entre 0 et 3';
         }
         return '';
     }
@@ -170,18 +179,18 @@ const AddJoute = ({ setListOfJoutes }) => {
                                 </Button.Dropdown>
                                 <Form.Input label="Joueur 1" placeholder="Joueur 1" value={players.j1.name || ''} readOnly />
                             </Div>
+                            <Div minimize={true} width='100px' >
+                                <Form.Input label="Sets j1" error={isInvalid('j1')} valid={isValid('j1')} value={players.j1.sets} onChange={(e) => { handleChange(e, 'j1') }} />
+                            </Div> 
+                        </Table.Col>
+                        <Table.Col>
                             <Div>
                                 <Button.Dropdown className="responsive-btn" ref={J2Ref} color="primary">
                                     {generateListOfPlayers('j2')}
                                 </Button.Dropdown>
                                 <Form.Input label="Joueur 2" placeholder="Joueur 1" value={players.j2.name || ''} readOnly />
                             </Div>
-                        </Table.Col>
-                        <Table.Col>
-                            <Div minimize={true} width='70px' >
-                                <Form.Input label="Sets j1" error={isInvalid('j1')} valid={isValid('j1')} value={players.j1.sets} onChange={(e) => { handleChange(e, 'j1') }} />
-                            </Div>  
-                            <Div minimize={true} width='70px' >
+                            <Div minimize={true} width='100px' >
                                 <Form.Input label="Sets j2" error={isInvalid('j2')} valid={isValid('j2')} value={players.j2.sets} onChange={(e) => { handleChange(e, 'j2') }} />
                             </Div>
                         </Table.Col>

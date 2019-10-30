@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import { Table, Tag } from 'tabler-react';
 import { getJoutes } from '../../../controllers/API';
-import AddJoute from '../AddJoute.js/index';
 const StyledContainerJoutes = styled.div`
     padding: 2em;
     display: flex;
@@ -12,36 +11,7 @@ const StyledContainerJoutes = styled.div`
     flex-direction: column;
 `;
 
-const ContainerJoutes = () => {
-    // const [listOfPlayers, setListOfPlayers] = useState([]);
-    // const [requesting, setRequesting] = useState(false);
-    const [listOfJoutes, setListOfJoutes] = useState([]);
-    const [ready, setReady] = useState(false);
-    // const J1Ref = useRef(null);
-    // const J2Ref = useRef(null);
-    // const [players, setPlayers] = useState({
-    //     j1: {
-    //         name: '',
-    //         sets: 0
-    //     },
-    //     j2: {
-    //         name: '',
-    //         sets: 0
-    //     },
-    //     winner: {}
-    // })
-
-    useEffect(() => {
-        const fetch = async () => {
-            const joutes = await getJoutes();
-            // const allPlayers = await getPlayers();
-            // setListOfPlayers(allPlayers);
-            setListOfJoutes(joutes.reverse());
-            setReady(true);
-        }
-        fetch();
-
-    }, [])
+const ContainerJoutes = ({ listOfJoutes }) => {
     const generateTitles = () => {
         return (
             <Table.Header>
@@ -55,87 +25,6 @@ const ContainerJoutes = () => {
              </Table.Header>
         )
     }
-    // const handleClick = (player, oneOrTwo) => {
-    //     setPlayers({
-    //         ...players,
-    //         [oneOrTwo]: {
-    //             ...players[oneOrTwo],
-    //             name: player.firstname,
-    //             id: player.id
-    //         }
-    //     })
-    //     if(oneOrTwo === 'j1') {
-    //         J1Ref.current.state.isOpen = !J1Ref.current.state.isOpen;
-    //     } else {
-    //         J2Ref.current.state.isOpen = !J2Ref.current.state.isOpen;
-    //     }
-    // }
-
-    // const handleChange = (e, oneOrTwo) => {
-    //     setPlayers({
-    //         ...players,
-    //         [oneOrTwo]: {
-    //             ...players[oneOrTwo],
-    //             sets: e.target.value / 1
-    //         },
-    //         winner: e.target.value == 3 ? {
-    //             name: players[oneOrTwo].name,
-    //             id: players[oneOrTwo].id,
-    //             sets: e.target.value / 1
-    //         } : players.winner
-    //     })
-    // }
-
-    // const addJoute = async () => {
-    //     if (requesting) { return }
-    //     setRequesting(true);
-    //     if (!players.winner.id) { return; }
-    //     const loser = [players.j1, players.j2].find((player) => player.sets !== 3);
-    //     const res = await postJoute({
-    //         winner_id: players.winner.id,
-    //         loser_id: loser.id,
-    //         loser_sets: loser.sets
-    //     })
-    //     if (res) {
-    //         setPlayers({
-    //             j1: {
-    //                 name: '',
-    //                 sets: 0
-    //             },
-    //             j2: {
-    //                 name: '',
-    //                 sets: 0
-    //             },
-    //             winner: {}
-    //         })
-    //         setListOfJoutes((prev) => {
-    //             return [
-    //                 {
-    //                     id: prev.length +1,
-    //                     loser: loser.name,
-    //                     score: { winner: 3, loser: loser.sets },
-    //                     winner: players.winner.name
-    //                 },
-    //                 ...prev
-    //             ]
-    //         })
-    //         setTimeout(() => {
-    //             setRequesting(false);
-    //         }, 1000)
-    //     }
-    // }
-
-    // const generateListOfPlayers = (type) => {
-    //     const arrToReturn = [];
-    //     listOfPlayers.map((player) => {
-    //         arrToReturn.push(
-    //             <Dropdown.Item onClick={() => handleClick(player, type)} key={player.id} >
-    //                 {player.firstname}
-    //             </Dropdown.Item>
-    //         )
-    //     })
-    //     return arrToReturn;
-    // }
 
     const generateRows = () => {
         const arrToReturn = [];
@@ -152,7 +41,7 @@ const ContainerJoutes = () => {
         return arrToReturn;
     }
 
-    return ready && (
+    return (
         <StyledContainerJoutes>
             {/* <AddJoute setListOfJoutes={setListOfJoutes} /> */}
             <Table>
