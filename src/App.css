@@ -1,7 +1,9 @@
 .App {
   text-align: center;
 }
-
+.dimmer {
+  min-height: 150px;
+}
 .form-group {
   margin-bottom: 0;
 }
