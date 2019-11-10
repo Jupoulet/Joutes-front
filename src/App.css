@@ -8,6 +8,15 @@
   margin-bottom: 0;
 }
 
+table {
+  width: 90%;
+  margin: auto;
+}
+
+td {
+  vertical-align: middle !important;
+}
+
 .App-logo {
   height: 40vmin;
 }

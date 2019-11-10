@@ -4,11 +4,8 @@ import { Card, Page, Grid, Dimmer } from 'tabler-react'
 import styled from 'styled-components';
 import Modal from '../components/Modal/index'
 import AddJoute from '../components/Joutes/AddJoute.js';
-<<<<<<< HEAD
 import Stats from '../components/Stats/index.js'
-=======
 import { getJoutes } from '../controllers/API';
->>>>>>> 1edf23d08aad6bb1fd0fa2f36248f252c917ddf9
 
 const Div = styled.div`
     padding: 2em 2em 0em 2em;
@@ -36,33 +33,6 @@ const Home = () => {
                 <Grid>
                     <Grid.Row md={12}>
                         <Grid.Col md={6}>
-<<<<<<< HEAD
-                            <Grid.Row cards deck>
-                                <Grid.Col>
-                                    <Card>
-                                        <Div>
-                                            <Page.Title>Ajouter votre joute</Page.Title>
-                                        </Div>
-                                        <AddJoute />
-                                    </Card>            
-                                </Grid.Col>
-                            </Grid.Row>
-                            <Grid.Row cards deck>
-                                <Grid.Col>
-                                    <Card>
-                                        <Div>
-                                            <Page.Title>Joutes</Page.Title>
-                                        </Div>
-                                        <Joutes />
-                                    </Card>            
-                                </Grid.Col>
-                            </Grid.Row>
-                        </Grid.Col>
-                        <Grid.Col md={6}>
-                            <Grid.Row cards deck>
-                                <Stats />
-                            </Grid.Row>
-=======
                             <Card>
                                 <Div>
                                     <Page.Title>Ajouter votre joute</Page.Title>
@@ -83,7 +53,9 @@ const Home = () => {
                                     <Dimmer active loader/>
                                 }
                             </Card>            
->>>>>>> 1edf23d08aad6bb1fd0fa2f36248f252c917ddf9
+                        </Grid.Col>
+                        <Grid.Col md={6}>
+                                <Stats />
                         </Grid.Col>
                     </Grid.Row> 
                 </Grid>

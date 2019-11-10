@@ -3,6 +3,14 @@ import config from '../config';
 
 const api = config[process.env.NODE_ENV].api;
 
+export const addPlayer = async (body) => {
+    const result = await axios.post(`${api}/addPlayer`, body);
+    if (result) {
+        return result.data
+    }
+    return;
+}
+
 export const getJoutes = async () => {
     const result = await axios.get(`${api}/joutes`);
     if (result) {

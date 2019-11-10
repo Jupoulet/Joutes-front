@@ -8,6 +8,7 @@ import {
   Route,
 } from "react-router-dom";
 import Home from './pages/Home';
+import Players from './pages/Players';
 import './App.css';
 import Navbar from './components/Navbar/index'
 
@@ -19,9 +20,10 @@ const Wrapper = styled.div`
 const App = () => {
   return (
     <Wrapper>
-      <Navbar />
       <Router>
+        <Navbar />
         <Switch>
+          <Route exatc path="/players" component={Players} />
           <Route exatc path="/" component={Home} />
         </Switch>
       </Router>

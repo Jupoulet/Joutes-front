@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Nav, Grid } from 'tabler-react';
 
 const itemsObjects=[
@@ -13,8 +14,13 @@ const itemsObjects=[
 const Navbar = () => {
     return (
         <Nav tabbed="true" >
-            <Nav.Item value="Joutes" icon="award" type="div" href="/" />
-            <Nav.Item value="Joueurs" icon="users" type="div" href="/users" />
+            <Link to="/">
+                <Nav.Item hasSubNav={false} value="Joutes" icon="award" type="div" href="/" />
+            </Link>
+            <Link to="/players">
+                <Nav.Item hasSubNav={false} value="Joueurs" icon="users" type="div" href="/players" />
+            </Link>
+            
         </Nav>
     );
 }
