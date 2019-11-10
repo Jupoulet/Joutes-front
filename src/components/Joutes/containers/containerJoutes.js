@@ -3,7 +3,9 @@ import styled from 'styled-components';
 import { Table, Tag } from 'tabler-react';
 import { getJoutes } from '../../../controllers/API';
 const StyledContainerJoutes = styled.div`
-    padding: 2em;
+    @media (min-width: 900px ) {
+        padding: 2em;
+    }
     display: flex;
     width: 100%;
     justify-content: center;

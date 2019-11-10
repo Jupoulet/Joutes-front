@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
-import { Table, Tag, Form, Dropdown, Button } from 'tabler-react';
+import { Table, Tag, Form, Dropdown, Button, Grid } from 'tabler-react';
 import { getPlayers, postJoute } from '../../../controllers/API';
 
 const Div = styled.div`
@@ -12,7 +12,7 @@ const Div = styled.div`
 `;
 
 const StyledContainerJoutes = styled.div`
-    padding: 2em;
+    padding: 2em;  
     display: flex;
     width: 100%;
     justify-content: center;
@@ -162,7 +162,7 @@ const AddJoute = ({ setListOfJoutes }) => {
 
     return ready &&(
         <StyledContainerJoutes>
-            <Table>
+            <Grid>
                 {/* <Table.Header>
                     <tr>
                         <Table.ColHeader>JOUEURS</Table.ColHeader>
@@ -170,9 +170,9 @@ const AddJoute = ({ setListOfJoutes }) => {
                         <Table.ColHeader>VAINQUEUR</Table.ColHeader>
                     </tr>
                 </Table.Header> */}
-                <Table.Body>
-                <Table.Row>
-                        <Table.Col>
+                {/* <Table.Body> */}
+                <Grid.Row>
+                        <Grid.Col lg={4} md={6} sm={12} className="col-12">
                             <Div>
                                 <Button.Dropdown className="responsive-btn" ref={J1Ref} color="primary">
                                     {generateListOfPlayers('j1')}
@@ -182,8 +182,8 @@ const AddJoute = ({ setListOfJoutes }) => {
                             <Div minimize={true} width='100px' >
                                 <Form.Input label="Sets j1" error={isInvalid('j1')} valid={isValid('j1')} value={players.j1.sets} onChange={(e) => { handleChange(e, 'j1') }} />
                             </Div> 
-                        </Table.Col>
-                        <Table.Col>
+                        </Grid.Col>
+                        <Grid.Col md={6} sm={12} lg={4} className="col-12">
                             <Div>
                                 <Button.Dropdown className="responsive-btn" ref={J2Ref} color="primary">
                                     {generateListOfPlayers('j2')}
@@ -193,18 +193,18 @@ const AddJoute = ({ setListOfJoutes }) => {
                             <Div minimize={true} width='100px' >
                                 <Form.Input label="Sets j2" error={isInvalid('j2')} valid={isValid('j2')} value={players.j2.sets} onChange={(e) => { handleChange(e, 'j2') }} />
                             </Div>
-                        </Table.Col>
-                        <Table.Col>
+                        </Grid.Col>
+                        <Grid.Col md={6} sm={12} lg={4} className="col-12">
                             <Div>
                                 <Form.Input label="Vainqueur" value={players.winner.name || ''} readOnly />
                             </Div>
                             <Div>
                                 <Button loading={requesting} color="primary" onClick={addJoute}>Ajouter</Button>
                             </Div>
-                        </Table.Col>
-                    </Table.Row>
-                </Table.Body>
-            </Table>
+                        </Grid.Col>
+                    </Grid.Row>
+                {/* </Table.Body> */}
+            </Grid>
         </StyledContainerJoutes>
     );
 }

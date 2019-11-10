@@ -18,7 +18,9 @@ const DivTitle = styled.div`
 `;
 
 const StyledContainerJoutes = styled.div`
-    padding: 2em;
+    @media (min-width: 900px ) {
+        padding: 2em;
+    }
     display: flex;
     width: 100%;
     justify-content: center;

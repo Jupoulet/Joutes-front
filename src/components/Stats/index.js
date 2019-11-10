@@ -80,7 +80,7 @@ const Stats = () => {
     return (
         <Grid.Col md={12}>
             <Grid.Row style={{ width: '100%'}}>
-                <Grid.Col md={6}>
+                <Grid.Col md={12}>
                     <StampCard
                         color="orange"
                         icon="award"

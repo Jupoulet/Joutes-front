@@ -14,6 +14,9 @@ import Navbar from './components/Navbar/index'
 
 const Wrapper = styled.div`
   height: 100%;
+  @media (max-width: 600px) {
+    padding: 0em 1em;
+  }
   padding: 0em 2em;
 `
 // DATABASE_URL : postgresql-tetrahedral-56838
