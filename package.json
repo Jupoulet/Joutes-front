@@ -16,6 +16,7 @@
     "tsutils": "^3.17.1"
   },
   "scripts": {
+    "deploy": "npm run build && serve -s build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
