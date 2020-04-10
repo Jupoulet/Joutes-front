@@ -1,8 +1,33 @@
 import React, { useEffect, useState } from 'react';
-import { Grid, StampCard, colors, Card } from 'tabler-react';
+import styled from 'styled-components';
+import { Grid, StampCard, Card, Avatar } from 'tabler-react';
 import { getJoutes, getPlayers } from '../../controllers/API';
 import C3Chart from "react-c3js";
 
+
+const WrapperStat = styled.div`
+    display: flex;
+    height: 3em;
+    align-items: center;
+    width: 50%;
+    @media (max-width: 600px) {
+      width: 100%;
+    }
+`
+
+const ProgressBar = styled.div`
+  width: ${props => props.width}%;
+  height: 80%;
+  background-color: ${props => props.width < 50 ? 'indianred' : 'darkseagreen'};
+  color: white;
+  text-align: center;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 900;
+`
 
 const Stats = () => {
     const [joutes, setJoutes] = useState([]);
@@ -43,33 +68,27 @@ const Stats = () => {
                 joutesLost: jouteByPlayer[1].filter((j) => joutesByPlayers[jouteByPlayer[0]][0].winner === j.loser ).length
             }
             arrToReturn.push(
-                <Grid.Col sm={12}>
+                <Grid.Col width={window.innerWidth > 800 ?  6 : 12}>
                 <Card>
                   <Card.Header>
-                    <Card.Title>Victoires : {jouteByPlayer[0].split('_').join(' - ')}</Card.Title>
+                    <div style={{display: "flex", justifyContent: "space-between", alignItems: "center", width: "100%"}}>
+                      <Card.Title>
+                          <span>{jouteByPlayer[0].split('_').join(' - ')}</span>
+                      </Card.Title>
+                      <Avatar color="blue">{joutesLost + joutesWon}</Avatar>
+                    </div>
                   </Card.Header>
                   <Card.Body>
-                    <C3Chart
-                      style={{ height: "14rem" }}
-                      data={{
-                        columns: [
-                          [`${refPlayer}: ${joutesWon}`, (joutesWon * 100 / jouteByPlayer[1].length).toFixed(0)],
-                          [`${refPlayer2}: ${joutesLost} `, (joutesLost * 100 / jouteByPlayer[1].length).toFixed(0)],
-                        ],
-                        type: "donut", // default type of chart
-                        // colors: {
-                        //   [`${refPlayer} ${joutesWon} Victoires`]: colors["orange-dark"],
-                        //   [`${refPlayer} ${joutesLost} Victoires`]: colors["blue-light"],
-                        // }
-                      }}
-                      legend={{
-                        show: true, //hide legend
-                      }}
-                      padding={{
-                        bottom: 0,
-                        top: 0,
-                      }}
-                    />
+                    <div>
+                      <WrapperStat>
+                        <span style={{width: "65px"}}>{`${refPlayer}:`}</span>
+                        <ProgressBar width={(joutesWon * 100 / jouteByPlayer[1].length).toFixed(0)}>{(joutesWon * 100 / jouteByPlayer[1].length).toFixed(0)}% ({joutesWon})</ProgressBar>
+                      </WrapperStat>
+                      <WrapperStat>
+                        <span style={{width: "65px"}}>{`${refPlayer2}:`}</span>
+                        <ProgressBar width={(joutesLost * 100 / jouteByPlayer[1].length).toFixed(0)}>{(joutesLost * 100 / jouteByPlayer[1].length).toFixed(0)}% ({joutesLost})</ProgressBar>
+                      </WrapperStat>
+                    </div>
                   </Card.Body>
                 </Card>
               </Grid.Col>
@@ -91,7 +110,9 @@ const Stats = () => {
                         }
                     />
                 </Grid.Col>
-                {generateCharts()}
+            </Grid.Row>
+            <Grid.Row md={12}>
+              {generateCharts()}
             </Grid.Row>
         </Grid.Col  >
     );

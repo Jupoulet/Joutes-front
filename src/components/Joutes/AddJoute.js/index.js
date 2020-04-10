@@ -138,6 +138,7 @@ const AddJoute = ({ setListOfJoutes }) => {
             })
             setTimeout(() => {
                 setRequesting(false);
+                window.location.reload()
             }, 1000)
         }
     }
