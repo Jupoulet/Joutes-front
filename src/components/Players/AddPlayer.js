@@ -54,7 +54,7 @@ const AddPlayer = ({ setUpdate }) => {
     const postPlayer = async () => {
         setRequesting(true);
         const post = await addPlayer(inputs);
-        if (post.result.rowCount) {
+        if (post.success) {
             setTimeout(() => {
                 setRequesting(false);
                 setUpdate((prev) => !prev);

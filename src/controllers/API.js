@@ -4,7 +4,7 @@ import config from '../config';
 const api = config[process.env.NODE_ENV].api;
 
 export const addPlayer = async (body) => {
-    const result = await axios.post(`${api}/addPlayer`, body);
+    const result = await axios.post(`${api}/players`, body);
     if (result) {
         return result.data
     }
@@ -28,7 +28,7 @@ export const getPlayers = async () => {
 }
 
 export const postJoute = async (body) => {
-    const result = await axios.post(`${api}/addJoute`, body)
+    const result = await axios.post(`${api}/joutes`, body)
     if (result) {
         return result.data
     }
