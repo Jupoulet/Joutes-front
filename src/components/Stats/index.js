@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { Grid, StampCard, Card, Avatar } from 'tabler-react';
+import { Grid, StampCard, Card, Avatar, Button } from 'tabler-react';
 import { getJoutes, getPlayers } from '../../controllers/API';
-import C3Chart from "react-c3js";
+import Joutes from '../../components/Joutes/containers/containerJoutes';
 
 
 const WrapperStat = styled.div`
@@ -33,6 +33,7 @@ const Stats = () => {
     const [joutes, setJoutes] = useState([]);
     const [players, setPlayers] = useState([]);
     const [joutesByPlayers, setJoutesByPlayers] = useState({})
+    const [showMore, setShowMore] = useState({})
 
     const sortJoutesByPlayers = ({ players, joutes }) => {
         let gamers = {};
@@ -46,6 +47,13 @@ const Stats = () => {
         
             return result
         }, { })
+        
+       setShowMore(Object.keys(sortedJoutes).reduce((total, key) => {
+        return {
+          ...total,
+          [key]: false
+        }
+       }, {}))
        setJoutesByPlayers(sortedJoutes);
     }
     useEffect(() => {
@@ -58,6 +66,9 @@ const Stats = () => {
         }
         fetch();
     }, [])
+    const handleShowMore = (key) => {
+      setShowMore({ ...setShowMore, [key]: !showMore[key] })
+    }
     const generateCharts = () => {
         const arrToReturn = [];
         Object.entries(joutesByPlayers).map((jouteByPlayer) => {
@@ -68,7 +79,7 @@ const Stats = () => {
                 joutesLost: jouteByPlayer[1].filter((j) => joutesByPlayers[jouteByPlayer[0]][0].winner === j.loser ).length
             }
             arrToReturn.push(
-                <Grid.Col width={window.innerWidth > 800 ?  6 : 12}>
+                <Grid.Col width={window.innerWidth > 800 ?  6 : 12} key={jouteByPlayer[0]}>
                 <Card>
                   <Card.Header>
                     <div style={{display: "flex", justifyContent: "space-between", alignItems: "center", width: "100%"}}>
@@ -88,6 +99,10 @@ const Stats = () => {
                         <span style={{width: "65px"}}>{`${refPlayer2}:`}</span>
                         <ProgressBar width={(joutesLost * 100 / jouteByPlayer[1].length).toFixed(0)}>{(joutesLost * 100 / jouteByPlayer[1].length).toFixed(0)}% ({joutesLost})</ProgressBar>
                       </WrapperStat>
+                    </div>
+                    <div style={{marginTop: "1em"}}>
+                      <Button icon={showMore[jouteByPlayer[0]] ? "minus" : "plus"} color="secondary" onClick={() => handleShowMore(jouteByPlayer[0])}>Détails</Button>
+                      {showMore[jouteByPlayer[0]] ? <Joutes listOfJoutes={joutesByPlayers[jouteByPlayer[0]]}/> : null}
                     </div>
                   </Card.Body>
                 </Card>
